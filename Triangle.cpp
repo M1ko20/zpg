@@ -5,12 +5,10 @@
 #include "Triangle.h"
 
 Triangle::Triangle() {
-    // Každý vertex má 6 floatů: x, y, z, r, g, b
     static float trianglePoints[] = {
-        // Pozice (x, y, z)    // Barva (r, g, b)
-         0.0f,  0.5f, 0.0f,    1.0f, 0.0f, 0.0f,  // Vrchní vertex - červený
-        -0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,  // Levý dolní vertex - zelený
-         0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f   // Pravý dolní vertex - modrý
+        1.5f, 1.5f, 0.0f,
+        0.5f, -1.5f, 0.0f,
+       -0.5f, -1.5f, 0.0f
     };
 
     points = trianglePoints;
