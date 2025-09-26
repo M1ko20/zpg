@@ -95,8 +95,23 @@ void App::createShaders() {
 }
 
 void App::createModels() {
-    models[0] = new Quad();
-    models[1] = new Triangle();
+    static float trianglePoints[] = {
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+        0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f
+    };
+
+    static float quadPoints[] = {
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+        0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+    };
+
+    models[0] = new Triangle(trianglePoints, 3);
+    models[1] = new Quad(quadPoints, 6);
 }
 
 void App::run() {

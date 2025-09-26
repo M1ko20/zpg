@@ -10,6 +10,7 @@
 class Quad : public Model{
 public:
     Quad();
+    Quad(float* vertices, int count);
     void draw() override;
 };
 

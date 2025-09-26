@@ -10,6 +10,7 @@
 class Triangle: public Model{
 public:
     Triangle();
+    Triangle(float* vertices, int count);
     void draw() override;
 };
 

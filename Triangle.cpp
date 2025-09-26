@@ -17,9 +17,16 @@ Triangle::Triangle() {
     bindBuffer();
 }
 
+Triangle::Triangle(float* vertices, int count) {
+    points = vertices;
+    vertexCount = count;
+
+    bindBuffer();
+}
+
 
 void Triangle::draw(){
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 
 }
