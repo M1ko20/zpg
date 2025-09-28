@@ -6,6 +6,7 @@
 
 #include "Quad.h"
 #include "Triangle.h"
+#include "Cube.h"
 
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
 
@@ -34,7 +35,7 @@ static void button_callback(GLFWwindow* window, int button, int action, int mode
 
 App::App()
 {
-    shaderProgram = nullptr;
+    //shaderProgram = nullptr;
     window = nullptr;
     //model = nullptr;
     ratio = 0;
@@ -91,25 +92,48 @@ void App::initialization()
 }
 
 void App::createShaders() {
-    shaderProgram = new ShaderProgram();
+
+
+    const char*  vertex_shader =
+     "#version 330\n"
+     "layout(location=0) in vec3 vp;"
+     "layout(location=1) in vec3 vn;"
+     "out vec3 color;"
+     "void main () {"
+     "     gl_Position = vec4 (vp, 1.0);"
+     "     color = vn;"
+     "}";
+
+
+    const char* fragment_shader =
+    "#version 330\n"
+    "in vec3 color;"
+    "out vec4 fragColor;"
+    "void main () {"
+    "     fragColor = vec4 (0.0,1.0,1.0, 1.0);"
+    "}";
+
+
+    shaderPrograms[0] = new ShaderProgram();
+    shaderPrograms[1] = new ShaderProgram(vertex_shader, fragment_shader);
 }
 
 void App::createModels() {
     static float trianglePoints[] = {
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
         0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f
     };
 
     static float quadPoints[] = {
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-    };
+        0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,
+         1.5f,  0.5f, 0.0f,   0.0f, 1.0f, 0.0f,
+         1.5f,  1.5f, 0.0f,   0.0f, 0.0f, 1.0f,
+         1.5f,  1.5f, 0.0f,   0.0f, 0.0f, 1.0f,
+         0.5f,  1.5f, 0.0f,   1.0f, 1.0f, 0.0f,
+         0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f
 
+    };
     models[0] = new Triangle(trianglePoints, 3);
     models[1] = new Quad(quadPoints, 6);
 }
@@ -118,10 +142,12 @@ void App::run() {
     while (!glfwWindowShouldClose(window)) {
         // clear color and depth buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        shaderProgram->useProgram();
-        for (int i = 0; i < 2; i++) {
-            models[i]->draw();
-        }
+
+
+        shaderPrograms[0]->useProgram();
+        models[0]->draw();
+        shaderPrograms[1]->useProgram();
+        models[1]->draw();
 
         // update other events like input handling
         glfwPollEvents();

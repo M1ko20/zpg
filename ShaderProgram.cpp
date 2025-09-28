@@ -18,6 +18,27 @@ void ShaderProgram::CheckStatus() {
     }
 }
 
+
+ShaderProgram::ShaderProgram(const char* vertexShaderIn, const char* fragmentShaderIn) {
+
+    vertex_shader = vertexShaderIn;
+    fragment_shader = fragmentShaderIn;
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertex_shader, NULL);
+    glCompileShader(vertexShader);
+
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragment_shader, NULL);
+    glCompileShader(fragmentShader);
+
+    ShaderID = glCreateProgram();
+    glAttachShader(ShaderID, fragmentShader);
+    glAttachShader(ShaderID, vertexShader);
+    glLinkProgram(ShaderID);
+
+    CheckStatus();
+}
+
 ShaderProgram::ShaderProgram() {
 
     vertex_shader =
@@ -26,7 +47,7 @@ ShaderProgram::ShaderProgram() {
  "layout(location=1) in vec3 vn;"
  "out vec3 color;"
  "void main () {"
- "     gl_Position = MVP * vec4 (vp, 1.0);"
+ "     gl_Position = vec4 (vp, 1.0);"
  "     color = vn;"
  "}";
 
@@ -36,7 +57,7 @@ ShaderProgram::ShaderProgram() {
     "in vec3 color;"
     "out vec4 fragColor;"
     "void main () {"
-    "     gl_FragColor = vec4 (color, 1.0);"
+    "     fragColor = vec4 (color, 1.0);"
     "}";
 
 
@@ -52,6 +73,8 @@ ShaderProgram::ShaderProgram() {
     glAttachShader(ShaderID, fragmentShader);
     glAttachShader(ShaderID, vertexShader);
     glLinkProgram(ShaderID);
+
+    CheckStatus();
 }
 
 void ShaderProgram::useProgram() {

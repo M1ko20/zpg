@@ -21,6 +21,7 @@ class ShaderProgram
 
     public:
     ShaderProgram();
+    ShaderProgram(const char* vertexShaderIn, const char* fragmentShaderIn);
     void useProgram();
 
 

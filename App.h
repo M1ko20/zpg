@@ -34,7 +34,7 @@ private:
     GLFWwindow* window;
     float ratio;
     Model* models[2];
-    ShaderProgram* shaderProgram;
+    ShaderProgram* shaderPrograms[2];
 };
 
 
