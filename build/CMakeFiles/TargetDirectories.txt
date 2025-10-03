@@ -1,0 +1,3 @@
+/Users/adammikolas/CLionProjects/real/build/CMakeFiles/real.dir
+/Users/adammikolas/CLionProjects/real/build/CMakeFiles/edit_cache.dir
+/Users/adammikolas/CLionProjects/real/build/CMakeFiles/rebuild_cache.dir
